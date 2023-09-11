@@ -1,0 +1,41 @@
+cameronduley@Camerons-MBP uni_recover % mix run benchmarking/benchmark.exs
+Exact size of input: 207123
+Operating System: macOS
+CPU Information: Apple M1 Max
+Number of Available Cores: 10
+Available memory: 32 GB
+Elixir 1.15.4
+Erlang 26.0.2
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 10 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: none specified
+Estimated total run time: 42 s
+
+Benchmarking Naive 3-liner, 207KB Input ...
+Benchmarking Simple Rebuild, 207KB Input ...
+Benchmarking UniRecover, 207KB Input ...
+
+Name                                  ips        average  deviation         median         99th %
+UniRecover, 207KB Input           1842.84      542.64 μs     ±1.44%      539.67 μs      574.71 μs
+Simple Rebuild, 207KB Input        172.02     5813.34 μs    ±13.88%     5534.29 μs     8223.92 μs
+Naive 3-liner, 207KB Input          56.59    17670.58 μs     ±6.44%    17377.60 μs    19210.26 μs
+
+Comparison: 
+UniRecover, 207KB Input           1842.84
+Simple Rebuild, 207KB Input        172.02 - 10.71x slower +5270.70 μs
+Naive 3-liner, 207KB Input          56.59 - 32.56x slower +17127.94 μs
+
+Memory usage statistics:
+
+Name                           Memory usage
+UniRecover, 207KB Input               296 B
+Simple Rebuild, 207KB Input       8215208 B - 27754.08x memory usage +8214912 B
+Naive 3-liner, 207KB Input       39556040 B - 133635.27x memory usage +39555744 B
+
+**All measurements for memory usage were the same**
+cameronduley@Camerons-MBP uni_recover % 

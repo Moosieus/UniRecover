@@ -1,28 +1,19 @@
 defmodule UniRecover.MixProject do
   use Mix.Project
 
+  @version "0.1.1"
+  @source_url "https://github.com/Moosieus/UniRecover"
+
   def project do
     [
       app: :uni_recover,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       description: "A native Elixir library for replacing illegal bytes in Unicode encoded data.",
       deps: deps(),
-      package: [
-        name: "uni_recover",
-        licenses: ["MIT"],
-        links: %{"GitHub" => "https://github.com/Moosieus/UniRecover"}
-      ],
-      docs: [
-        name: "UniRecover",
-        main: "readme",
-        source_ref: "main",
-        source_url: "https://github.com/Moosieus/elixir-a2s",
-        extras: [
-          "README.md"
-        ],
-      ],
+      docs: docs(),
+      package: package(),
     ]
   end
 
@@ -35,6 +26,27 @@ defmodule UniRecover.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps, do: [
-    {:ex_doc, "~> 0.30.5", only: :dev, runtime: false}
+    {:ex_doc, "~> 0.30.6", only: :dev, runtime: false},
+    {:benchee, "~> 1.1.0", only: :dev, runtime: false},
   ]
+
+  defp docs do
+    [
+      name: "UniRecover",
+      main: "readme",
+      source_ref: "main",
+      source_url: @source_url,
+      extras: [
+        "README.md",
+      ],
+    ]
+  end
+
+  defp package do
+    [
+      name: "uni_recover",
+      licenses: ["MIT"],
+      links: %{"GitHub" => @source_url}
+    ]
+  end
 end

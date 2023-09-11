@@ -29,7 +29,7 @@ UniRecover.sub(<<"foo", 0b11111111, "bar">>)
 ```
 
 ## Benchmarking
-The following benchmark demonstrates how UniRecover leverages sub binaries, only allocating the indexes of illegal bytes. See the `/benchmarking` in the repo for details.
+The following benchmark demonstrates how UniRecover leverages sub binaries, only allocating the indexes of illegal bytes. See the benchmarking folder in the repo for details.
 
 ```
 Name                                  ips        average  deviation         median         99th %

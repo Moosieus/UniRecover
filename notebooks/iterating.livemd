@@ -1,4 +1,4 @@
-# Iterating on Jose's Suggestion :D
+# Iterating on Jose's Suggestions :D
 
 ```elixir
 Mix.install(
@@ -65,7 +65,7 @@ end
 The above replaces all sequences of invalid code points with a single replacement character ("�" / U+FFFD), but W3C's specification is a bit more specific:
 
 * Truncated but otherwise valid sequences are replaced with 1x "�"
-* Anything else's replaced with 1x "�" per byte
+* Everything else's replaced with 1x "�" per byte
 
 ```elixir
 <<trunc::binary-size(2), _::8>> = "ᐸ"
@@ -105,7 +105,7 @@ SimpleII.sub(x)
 
 ## Maybe?
 
-I'm thought I might be able to iterate on the above to satisfy W3C's spec. The following is the result I landed on:
+I thought I might be able to iterate on the above to satisfy W3C's spec. The following is the result I landed on:
 
 ```elixir
 defmodule SimpleIII do
@@ -195,4 +195,4 @@ SimpleIII.sub(x)
 
 Looks like it conforms - that's hopeful!
 
-Compared to other languages, the pattern matching effectively "flatten out" the truncated cases. Most other approaches use arrays with precomupted values and bitwise magic to determine if every 'next' byte's valid or not.
+Compared to other languages, the pattern matching effectively "flattens out" the truncated cases. Most other approaches use arrays with precomupted values and bitwise magic to determine if every 'next' byte's valid or not.

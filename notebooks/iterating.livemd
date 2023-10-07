@@ -1,0 +1,198 @@
+# Iterating on Jose's Suggestion :D
+
+```elixir
+Mix.install(
+  [
+    {:uni_recover, path: Path.join(__DIR__, "../"), env: :dev}
+  ],
+  lockfile: :uni_recover
+)
+
+defmodule Bits do
+  @doc """
+  Prints all 8 bits in a byte
+  """
+  def as_string(binary) do
+    for(<<x::size(1) <- binary>>, do: "#{x}")
+    |> Enum.chunk_every(8)
+    |> Enum.join(" ")
+  end
+
+  @doc """
+  Convenience function for creating tables
+  """
+  def as_headers(binary) do
+    for(<<x::size(1) <- binary>>, do: "#{x}")
+    |> Enum.chunk_every(8)
+    |> Enum.join(" | ")
+  end
+end
+```
+
+## Preface
+
+See: https://github.com/Moosieus/UniRecover/pull/1
+
+Jose Provided this faster and more concise implementation, which I've aliased `SimpleII` for lack of better term:
+
+```elixir
+defmodule SimpleII do
+  @dialyzer :no_improper_lists
+
+  def sub(s) when is_binary(s) do
+    IO.iodata_to_binary(sub_valid(s, s))
+  end
+
+  defp sub_valid(<<_::utf8, rest::binary>>, original) do
+    sub_valid(rest, original)
+  end
+
+  defp sub_valid(<<_, rest::binary>>, original) do
+    valid = binary_part(original, 0, byte_size(original) - byte_size(rest) - 1)
+    [valid | sub_invalid(rest)]
+  end
+
+  defp sub_valid(<<>>, original), do: original
+
+  defp sub_invalid(<<_::utf8, rest::binary>> = binary), do: ["�" | sub_valid(rest, binary)]
+  defp sub_invalid(<<_, rest::binary>>), do: sub_invalid(rest)
+  defp sub_invalid(<<>>), do: "�"
+end
+```
+
+## A Small Caveat
+
+The above replaces all sequences of invalid code points with a single replacement character ("�" / U+FFFD), but W3C's specification is a bit more specific:
+
+* Truncated but otherwise valid sequences are replaced with 1x "�"
+* Anything else's replaced with 1x "�" per byte
+
+```elixir
+<<trunc::binary-size(2), _::8>> = "ᐸ"
+
+x = <<
+  "One: ",
+  trunc::binary,
+  " ",
+  "Three: ",
+  233,
+  233,
+  233,
+  " ",
+  "Four: ",
+  233,
+  trunc::binary,
+  233,
+  233,
+  " ",
+  ":D"
+>>
+```
+
+For illustration, here's a comparison to the [present](https://github.com/Moosieus/UniRecover/tree/729f8a7650fc897d7ff931740bda94408abee110) `UniRecover.sub/1`:
+
+```elixir
+UniRecover.sub(x)
+```
+
+```elixir
+SimpleII.sub(x)
+```
+
+> ***Caveat to the caveat:** The Unicode standard doesn't actually specify how errors should be handled, as the standard only defines what it means to be correct. That technically means the above would be suitable.
+> 
+> *But I'd argue it's worth conforming to W3C's recommendation, as other langs and apps have converged on that.*
+
+## Maybe?
+
+I'm thought I might be able to iterate on the above to satisfy W3C's spec. The following is the result I landed on:
+
+```elixir
+defmodule SimpleIII do
+  @dialyzer :no_improper_lists
+
+  def sub(s) when is_binary(s) do
+    IO.iodata_to_binary(sub_valid(s, s))
+  end
+
+  defp sub_valid(rest, original, acc \\ [])
+
+  defp sub_valid(<<_::utf8, rest::binary>>, original, acc) do
+    sub_valid(rest, original, acc)
+  end
+
+  defp sub_valid(<<rest::binary>>, original, acc) do
+    valid = binary_part(original, 0, byte_size(original) - byte_size(rest))
+    sub_invalid(rest, [acc | valid])
+  end
+
+  defp sub_valid(<<>>, original, _), do: original
+
+  defp sub_invalid(<<_::utf8, rest::binary>> = binary, acc), do: sub_valid(rest, binary, acc)
+
+  # 2/3-byte truncated
+  defp sub_invalid(<<0b1110::4, i::4, 0b10::2, ii::6, n_lead::2, n_rest::6, rest::binary>>, acc)
+       when n_lead != 0b10 do
+    # tcp = truncated code point, must be valid for 3-bytes
+    <<tcp::10>> = <<i::4, ii::6>>
+
+    cond do
+      tcp >= 32 && tcp <= 863 ->
+        # valid truncated code point -> replace with 1x U+UFFD
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+
+      tcp >= 896 && tcp <= 1023 ->
+        # valid truncated code point -> replace with 1x U+UFFD
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+
+      true ->
+        # invalid truncated code point -> replace with 2x U+UFFD
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+    end
+  end
+
+  # 2/4-byte truncated
+  defp sub_invalid(<<0b11110::5, i::3, 0b10::2, ii::6, n_lead::2, n_rest::6, rest::binary>>, acc)
+       when n_lead != 0b10 do
+    <<tcp::9>> = <<i::3, ii::6>>
+
+    case tcp >= 16 && tcp <= 271 do
+      true ->
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+
+      false ->
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+    end
+  end
+
+  # 3/4-byte truncated
+  defp sub_invalid(
+         <<0b11110::5, i::3, 0b10::2, ii::6, 0b10::2, iii::6, n_lead::2, n_rest::6,
+           rest::binary>>,
+         acc
+       )
+       when n_lead != 0b10 do
+    <<tcp::15>> = <<i::3, ii::6, iii::6>>
+
+    case tcp >= 1024 && tcp <= 17407 do
+      true ->
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+
+      false ->
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+    end
+  end
+
+  defp sub_invalid(<<_, rest::binary>>, acc), do: sub_invalid(rest, [acc | "�"])
+
+  defp sub_invalid(<<>>, acc), do: acc
+end
+```
+
+```elixir
+SimpleIII.sub(x)
+```
+
+Looks like it conforms - that's hopeful!
+
+Compared to other languages, the pattern matching effectively "flatten out" the truncated cases. Most other approaches use arrays with precomupted values and bitwise magic to determine if every 'next' byte's valid or not.

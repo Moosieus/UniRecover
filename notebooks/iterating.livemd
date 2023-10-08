@@ -147,7 +147,7 @@ defmodule SimpleIII do
 
       true ->
         # invalid truncated code point -> replace with 2x U+UFFD
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "��"])
     end
   end
 
@@ -161,7 +161,7 @@ defmodule SimpleIII do
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
 
       false ->
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "��"])
     end
   end
 
@@ -179,7 +179,7 @@ defmodule SimpleIII do
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
 
       false ->
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "���"])
     end
   end
 

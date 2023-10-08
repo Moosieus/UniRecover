@@ -46,7 +46,7 @@ defmodule UniRecover.Benchmark.Simple_Trunc do
 
       true ->
         # invalid truncated code point -> replace with 2x U+UFFD
-        do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
+        do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "��">>)
     end
   end
 
@@ -59,7 +59,7 @@ defmodule UniRecover.Benchmark.Simple_Trunc do
         do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
 
       false ->
-        do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
+        do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "��">>)
     end
   end
 
@@ -72,7 +72,7 @@ defmodule UniRecover.Benchmark.Simple_Trunc do
         do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
 
       false ->
-        do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
+        do_filter(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "���">>)
     end
   end
 
@@ -147,9 +147,9 @@ defmodule UniRecover.Benchmark.SimpleIII do
         # valid truncated code point -> replace with 1x U+UFFD
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
 
-      true ->
+      false ->
         # invalid truncated code point -> replace with 2x U+UFFD
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "��"])
     end
   end
 
@@ -162,7 +162,7 @@ defmodule UniRecover.Benchmark.SimpleIII do
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
 
       false ->
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "��"])
     end
   end
 
@@ -175,7 +175,7 @@ defmodule UniRecover.Benchmark.SimpleIII do
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
 
       false ->
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "�"])
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, [acc | "���"])
     end
   end
 
@@ -222,7 +222,7 @@ defmodule UniRecover.Benchmark.SimpleIII_BinAcc do
 
       true ->
         # invalid truncated code point -> replace with 2x U+UFFD
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "��">>)
     end
   end
 
@@ -235,7 +235,7 @@ defmodule UniRecover.Benchmark.SimpleIII_BinAcc do
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
 
       false ->
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "��">>)
     end
   end
 
@@ -248,7 +248,7 @@ defmodule UniRecover.Benchmark.SimpleIII_BinAcc do
         sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
 
       false ->
-        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "�">>)
+        sub_invalid(<<n_lead::2, n_rest::6, rest::binary>>, <<acc::bits, "���">>)
     end
   end
 

@@ -12,7 +12,7 @@ memory time: 2 s
 reduction time: 0 ns
 parallel: 1
 inputs: 200KB Valid ASCII, 200KB Very Often Invalid, 207KB JSON Once Invalid, 210KB Valid Unicode
-Estimated total run time: 5.60 min
+Estimated total run time: 4.67 min
 
 Benchmarking Binary with input 200KB Valid ASCII ...
 Benchmarking Binary with input 200KB Very Often Invalid ...
@@ -30,128 +30,111 @@ Benchmarking BinaryIII_BinAcc with input 200KB Valid ASCII ...
 Benchmarking BinaryIII_BinAcc with input 200KB Very Often Invalid ...
 Benchmarking BinaryIII_BinAcc with input 207KB JSON Once Invalid ...
 Benchmarking BinaryIII_BinAcc with input 210KB Valid Unicode ...
-Benchmarking BinaryWithTrunc with input 200KB Valid ASCII ...
-Benchmarking BinaryWithTrunc with input 200KB Very Often Invalid ...
-Benchmarking BinaryWithTrunc with input 207KB JSON Once Invalid ...
-Benchmarking BinaryWithTrunc with input 210KB Valid Unicode ...
-Benchmarking UniRecover with input 200KB Valid ASCII ...
-Benchmarking UniRecover with input 200KB Very Often Invalid ...
-Benchmarking UniRecover with input 207KB JSON Once Invalid ...
-Benchmarking UniRecover with input 210KB Valid Unicode ...
+Benchmarking BinaryIV with input 200KB Valid ASCII ...
+Benchmarking BinaryIV with input 200KB Very Often Invalid ...
+Benchmarking BinaryIV with input 207KB JSON Once Invalid ...
+Benchmarking BinaryIV with input 210KB Valid Unicode ...
 
 ##### With input 200KB Valid ASCII #####
 Name                       ips        average  deviation         median         99th %
-UniRecover             1954.32      511.69 μs     ±8.57%      509.71 μs      533.87 μs
-BinaryII               1936.34      516.44 μs     ±9.95%      510.42 μs      547.33 μs
-BinaryIII              1933.99      517.06 μs     ±0.82%      516.54 μs      534.83 μs
-BinaryIII_BinAcc       1693.69      590.43 μs    ±69.09%      513.54 μs     2845.25 μs
-BinaryWithTrunc         901.16     1109.68 μs     ±0.57%     1107.79 μs     1138.49 μs
-Binary                  886.87     1127.57 μs     ±2.55%     1113.83 μs     1220.94 μs
+BinaryIV                1.93 K      519.36 μs     ±2.15%      516.08 μs      565.54 μs
+BinaryIII_BinAcc        1.92 K      519.65 μs     ±2.67%      514.50 μs      567.19 μs
+BinaryIII               1.92 K      519.73 μs     ±2.24%      516.54 μs      565.76 μs
+BinaryII                1.82 K      549.14 μs    ±10.22%      555.08 μs      600.54 μs
+Binary                  1.75 K      572.07 μs     ±1.79%      568.46 μs      615.47 μs
 
 Comparison: 
-UniRecover             1954.32
-BinaryII               1936.34 - 1.01x slower +4.75 μs
-BinaryIII              1933.99 - 1.01x slower +5.38 μs
-BinaryIII_BinAcc       1693.69 - 1.15x slower +78.74 μs
-BinaryWithTrunc         901.16 - 2.17x slower +597.99 μs
-Binary                  886.87 - 2.20x slower +615.88 μs
+BinaryIV                1.93 K
+BinaryIII_BinAcc        1.92 K - 1.00x slower +0.29 μs
+BinaryIII               1.92 K - 1.00x slower +0.37 μs
+BinaryII                1.82 K - 1.06x slower +29.77 μs
+Binary                  1.75 K - 1.10x slower +52.71 μs
 
 Memory usage statistics:
 
 Name                Memory usage
-UniRecover                  40 B
-BinaryII                    40 B - 1.00x memory usage +0 B
-BinaryIII                  120 B - 3.00x memory usage +80 B
-BinaryIII_BinAcc           144 B - 3.60x memory usage +104 B
-BinaryWithTrunc            128 B - 3.20x memory usage +88 B
-Binary                     128 B - 3.20x memory usage +88 B
+BinaryIV                   120 B
+BinaryIII_BinAcc           144 B - 1.20x memory usage +24 B
+BinaryIII                  120 B - 1.00x memory usage +0 B
+BinaryII                    40 B - 0.33x memory usage -80 B
+Binary                     128 B - 1.07x memory usage +8 B
 
 **All measurements for memory usage were the same**
 
 ##### With input 200KB Very Often Invalid #####
 Name                       ips        average  deviation         median         99th %
-Binary                  822.19        1.22 ms     ±1.56%        1.21 ms        1.29 ms
-BinaryWithTrunc         735.34        1.36 ms     ±0.90%        1.36 ms        1.41 ms
-BinaryIII_BinAcc        264.65        3.78 ms     ±5.37%        3.77 ms        4.17 ms
-BinaryII                253.45        3.95 ms     ±5.08%        3.96 ms        4.65 ms
-BinaryIII               198.01        5.05 ms     ±1.90%        5.03 ms        5.68 ms
-UniRecover              167.96        5.95 ms     ±2.09%        5.93 ms        6.44 ms
+Binary                 1742.26      573.97 μs     ±2.08%      568.63 μs      620.80 μs
+BinaryIII_BinAcc        263.33     3797.55 μs     ±5.34%     3783.53 μs     4213.27 μs
+BinaryII                244.72     4086.24 μs     ±6.60%     4074.77 μs     4956.55 μs
+BinaryIV                206.97     4831.52 μs     ±4.32%     4780.28 μs     5324.62 μs
+BinaryIII               187.68     5328.31 μs     ±5.75%     5285.07 μs     6057.85 μs
 
 Comparison: 
-Binary                  822.19
-BinaryWithTrunc         735.34 - 1.12x slower +0.144 ms
-BinaryIII_BinAcc        264.65 - 3.11x slower +2.56 ms
-BinaryII                253.45 - 3.24x slower +2.73 ms
-BinaryIII               198.01 - 4.15x slower +3.83 ms
-UniRecover              167.96 - 4.90x slower +4.74 ms
+Binary                 1742.26
+BinaryIII_BinAcc        263.33 - 6.62x slower +3223.58 μs
+BinaryII                244.72 - 7.12x slower +3512.28 μs
+BinaryIV                206.97 - 8.42x slower +4257.55 μs
+BinaryIII               187.68 - 9.28x slower +4754.34 μs
 
 Memory usage statistics:
 
 Name                Memory usage
 Binary                     128 B
-BinaryWithTrunc            128 B - 1.00x memory usage +0 B
 BinaryIII_BinAcc       4000472 B - 31253.69x memory usage +4000344 B
 BinaryII               5600416 B - 43753.25x memory usage +5600288 B
+BinaryIV               5600456 B - 43753.56x memory usage +5600328 B
 BinaryIII              5600456 B - 43753.56x memory usage +5600328 B
-UniRecover             7254120 B - 56672.81x memory usage +7253992 B
 
 **All measurements for memory usage were the same**
 
 ##### With input 207KB JSON Once Invalid #####
 Name                       ips        average  deviation         median         99th %
-BinaryIII_BinAcc       1849.67      540.64 μs     ±0.77%      540.12 μs      558.00 μs
-BinaryIII              1848.45      540.99 μs     ±1.54%      539.37 μs      575.77 μs
-BinaryII               1841.38      543.07 μs     ±1.06%      542.21 μs      561.69 μs
-UniRecover             1827.16      547.30 μs     ±1.64%      543.08 μs      572.50 μs
-BinaryWithTrunc         867.15     1153.21 μs     ±0.93%     1149.83 μs     1206.72 μs
-Binary                  860.92     1161.55 μs     ±1.57%     1153.42 μs     1224.41 μs
+BinaryIII_BinAcc        1.84 K      542.41 μs     ±1.99%      539.87 μs      587.36 μs
+BinaryIV                1.84 K      543.82 μs     ±2.32%      540.12 μs      591.30 μs
+BinaryIII               1.84 K      544.35 μs     ±3.19%      538.87 μs      596.30 μs
+BinaryII                1.83 K      547.69 μs     ±2.60%      542.12 μs      595.37 μs
+Binary                  1.62 K      617.14 μs     ±3.23%      608.75 μs      675.42 μs
 
 Comparison: 
-BinaryIII_BinAcc       1849.67
-BinaryIII              1848.45 - 1.00x slower +0.36 μs
-BinaryII               1841.38 - 1.00x slower +2.44 μs
-UniRecover             1827.16 - 1.01x slower +6.66 μs
-BinaryWithTrunc         867.15 - 2.13x slower +612.57 μs
-Binary                  860.92 - 2.15x slower +620.91 μs
+BinaryIII_BinAcc        1.84 K
+BinaryIV                1.84 K - 1.00x slower +1.41 μs
+BinaryIII               1.84 K - 1.00x slower +1.94 μs
+BinaryII                1.83 K - 1.01x slower +5.29 μs
+Binary                  1.62 K - 1.14x slower +74.73 μs
 
 Memory usage statistics:
 
 Name                Memory usage
 BinaryIII_BinAcc           224 B
+BinaryIV                   232 B - 1.04x memory usage +8 B
 BinaryIII                  232 B - 1.04x memory usage +8 B
 BinaryII                   200 B - 0.89x memory usage -24 B
-UniRecover                 296 B - 1.32x memory usage +72 B
-BinaryWithTrunc            128 B - 0.57x memory usage -96 B
 Binary                     128 B - 0.57x memory usage -96 B
 
 **All measurements for memory usage were the same**
 
 ##### With input 210KB Valid Unicode #####
 Name                       ips        average  deviation         median         99th %
-BinaryIII               1.16 K      861.85 μs     ±1.22%      859.21 μs      903.99 μs
-UniRecover              1.14 K      873.48 μs     ±2.16%      871.58 μs      898.68 μs
-BinaryII                1.14 K      874.01 μs     ±1.95%      872.25 μs      907.87 μs
-Binary                  1.09 K      920.72 μs     ±1.04%      918.96 μs      961.85 μs
-BinaryWithTrunc         1.09 K      921.19 μs     ±1.61%      917.87 μs      967.20 μs
-BinaryIII_BinAcc        1.04 K      959.87 μs    ±25.46%      860.21 μs     1595.03 μs
+BinaryIII_BinAcc       1156.12      864.96 μs     ±1.77%      859.71 μs      918.66 μs
+BinaryIV               1153.91      866.62 μs     ±2.10%      860.00 μs      938.40 μs
+BinaryIII              1141.62      875.95 μs     ±3.34%      863.25 μs      972.20 μs
+BinaryII               1127.46      886.95 μs     ±2.91%      877.16 μs      951.55 μs
+Binary                  828.67     1206.76 μs     ±2.43%     1200.46 μs     1289.89 μs
 
 Comparison: 
-BinaryIII               1.16 K
-UniRecover              1.14 K - 1.01x slower +11.62 μs
-BinaryII                1.14 K - 1.01x slower +12.16 μs
-Binary                  1.09 K - 1.07x slower +58.87 μs
-BinaryWithTrunc         1.09 K - 1.07x slower +59.34 μs
-BinaryIII_BinAcc        1.04 K - 1.11x slower +98.02 μs
+BinaryIII_BinAcc       1156.12
+BinaryIV               1153.91 - 1.00x slower +1.66 μs
+BinaryIII              1141.62 - 1.01x slower +10.98 μs
+BinaryII               1127.46 - 1.03x slower +21.98 μs
+Binary                  828.67 - 1.40x slower +341.80 μs
 
 Memory usage statistics:
 
 Name                Memory usage
-BinaryIII                  120 B
-UniRecover                  40 B - 0.33x memory usage -80 B
-BinaryII                    40 B - 0.33x memory usage -80 B
-Binary                     128 B - 1.07x memory usage +8 B
-BinaryWithTrunc            128 B - 1.07x memory usage +8 B
-BinaryIII_BinAcc           144 B - 1.20x memory usage +24 B
+BinaryIII_BinAcc           144 B
+BinaryIV                   120 B - 0.83x memory usage -24 B
+BinaryIII                  120 B - 0.83x memory usage -24 B
+BinaryII                    40 B - 0.28x memory usage -104 B
+Binary                     128 B - 0.89x memory usage -16 B
 
 **All measurements for memory usage were the same**
-cameronduley@Camerons-MBP uni_recover % 

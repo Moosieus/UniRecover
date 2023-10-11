@@ -227,9 +227,7 @@ Benchee.run(
     "207KB JSON Once Invalid" => File.read!("benchmarking/hll_server_list-single_error.json"),
     "200KB Very Often Invalid" => String.duplicate(<<"abc", 233>>, 50_000),
     "200KB Valid ASCII" => String.duplicate("abcd", 50_000),
-    "105KB Valid Unicode" => String.duplicate("こんにちは世界", 5_000),
     "210KB Valid Unicode" => String.duplicate("こんにちは世界", 10_000),
-    "420KB Valid Unicode" => String.duplicate("こんにちは世界", 20_000)
   },
   time: 10,
   memory_time: 2,

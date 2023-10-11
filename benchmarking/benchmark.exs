@@ -1,23 +1,4 @@
 defmodule UniRecover.Benchmark.Simple do
-  @dialyzer :no_improper_lists
-
-  @doc """
-  Replaces illegal sequences by building a new string, sans the bad sequences.
-  Naive but does not compute the minimal sequence and is slower.
-  """
-  def sub(s) when is_binary(s) do
-    do_filter(s, <<>>)
-  end
-
-  defp do_filter(<<grapheme::utf8, rest::binary>>, acc) do
-    do_filter(rest, <<acc::bits, grapheme::utf8>>)
-  end
-
-  defp do_filter(<<_, rest::binary>>, acc), do: do_filter(rest, <<acc::bits, "�">>)
-  defp do_filter(<<>>, acc), do: acc
-end
-
-defmodule UniRecover.Benchmark.Simple_Trunc do
   @moduledoc """
   The above but with cases for valid-but-truncated code points.
   """
@@ -259,8 +240,7 @@ end
 
 Benchee.run(
   %{
-    "Binary" => &UniRecover.Benchmark.Simple.sub/1,
-    "BinaryWithTrunc" => &UniRecover.Benchmark.Simple_Trunc.sub/1,
+    "Binary" => &UniRecover.Benchmark.Simple_Trunc.sub/1,
     "BinaryII" => &UniRecover.Benchmark.SimpleII.sub/1,
     "BinaryIII" => &UniRecover.Benchmark.SimpleIII.sub/1,
     "BinaryIII_BinAcc" => &UniRecover.Benchmark.SimpleIII_BinAcc.sub/1,

@@ -1,3 +1,6 @@
+## A much improved version is available here: https://github.com/elixir-unicode/unicode.
+See `Unicode.replace_invalid/3`.
+
 # UniRecover
 A library for substituting illegal bytes in Unicode encoded data, following W3C spec as suggested by the [Unicode Standard](https://www.unicode.org/versions/Unicode15.0.0/UnicodeStandard-15.0.pdf#page=153).
 

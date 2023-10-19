@@ -1,4 +1,4 @@
-## A much improved version is available here: https://github.com/elixir-unicode/unicode.
+# A much improved version is available here: https://github.com/elixir-unicode/unicode.
 See `Unicode.replace_invalid/3`.
 
 # UniRecover

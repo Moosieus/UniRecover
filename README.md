@@ -1,4 +1,4 @@
-# A much improved version is available here: https://github.com/elixir-unicode/unicode.
+# A much improved version is available here: https://github.com/elixir-unicode/unicode
 See `Unicode.replace_invalid/3`.
 
 # UniRecover
@@ -12,7 +12,7 @@ Add `:uni_recover` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:uni_recover, "~> 0.1.1"}
+    {:uni_recover, "~> 0.1.2"}
   ]
 end
 ```

@@ -1,5 +1,7 @@
-# A much improved version is available here: https://github.com/elixir-unicode/unicode
-See `Unicode.replace_invalid/3`.
+# Update
+As of Elixir 1.16 [`String.replace_invalid/2`](https://hexdocs.pm/elixir/1.16/String.html#replace_invalid/2) is available for utf-8 substitution.
+
+utf-16 and utf-32 substitution are available in [elixir-unicode/unicode](https://github.com/elixir-unicode/unicode), using [`Unicode.replace_invalid/3`](https://hexdocs.pm/unicode/Unicode.html#replace_invalid/3).
 
 # UniRecover
 A library for substituting illegal bytes in Unicode encoded data, following W3C spec as suggested by the [Unicode Standard](https://www.unicode.org/versions/Unicode15.0.0/UnicodeStandard-15.0.pdf#page=153).
